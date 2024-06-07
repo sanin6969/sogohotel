@@ -1,0 +1,58 @@
+{% extends "index.html" %}
+{% load static %}
+{% block home %}
+<section class="site-hero overlay" style="background-image: url('{% static 'images/slider-3.jpg' %}')" data-stellar-background-ratio="0.5">
+
+    <div class="container">
+        <div class="row site-hero-inner justify-content-center align-items-center">
+          <div class="col-md-10 text-center" data-aos="fade-up">
+            <span class="custom-caption text-uppercase text-white d-block  mb-3">Welcome To Sogo   Hotel</span>
+            <h1 class="heading">Booking</h1>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- END section -->
+    <section class="py-5 bg-light m-5">
+        <div class="container text-center">
+            <h2 class="text-center"> Rooms</h2>
+            {% if error_message %}
+                <div class="alert alert-danger" role="alert">
+                    {{ error_message }}
+                </div>
+            {% endif %}
+            <form action="{% url 'single_room' %}" method="POST">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-lg-2">
+                        <label class="text-dark">Type of Room</label>
+                        {{ form.Type_of_room }}
+                    </div>
+                    <div class="col-lg-2">
+                        <label class="text-dark">Number of Rooms</label>
+                        {{ form.Number_of_Rooms }}
+                    </div>
+                    <div class="col-lg-2">
+                        <label class="text-dark">Check in</label>
+                        {{ form.Check_in }}
+                    </div>
+                    <div class="col-lg-2">
+                        <label class="text-dark">Check out</label>
+                        {{ form.Check_out }}
+                    </div>
+                    <div class="col-lg-2">
+                        <label class="text-dark">Time</label>
+                        {{ form.Time }}
+                    </div>
+                    <div class="col-lg-2">
+                        <button type="submit" class="btn btn-primary">Check Availability</button>
+                    </div>
+                </div>
+               
+            </form>
+        </div>
+    </section>
+    
+    
+    
+{% endblock home %}
