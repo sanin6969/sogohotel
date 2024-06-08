@@ -21,35 +21,75 @@
                     {{ error_message }}
                 </div>
             {% endif %}
-            <form action="{% url 'single_room' %}" method="POST">
+            
+            <form id="availability-form">
                 {% csrf_token %}
                 <div class="row">
                     <div class="col-lg-2">
                         <label class="text-dark">Type of Room</label>
-                        {{ form.Type_of_room }}
+                        {{ form.room_type }}
                     </div>
                     <div class="col-lg-2">
                         <label class="text-dark">Number of Rooms</label>
-                        {{ form.Number_of_Rooms }}
+                        {{ form.no_of_rooms }}
                     </div>
                     <div class="col-lg-2">
                         <label class="text-dark">Check in</label>
-                        {{ form.Check_in }}
+                        {{ form.check_in_date }}
                     </div>
                     <div class="col-lg-2">
                         <label class="text-dark">Check out</label>
-                        {{ form.Check_out }}
+                        {{ form.check_out_date }}
                     </div>
                     <div class="col-lg-2">
                         <label class="text-dark">Time</label>
-                        {{ form.Time }}
+                        {{ form.check_in_time }}
                     </div>
                     <div class="col-lg-2">
                         <button type="submit" class="btn btn-primary">Check Availability</button>
                     </div>
                 </div>
-               
             </form>
+        
+            <div id="availability-result" style="margin-top: 5rem;" ></div>
+            <div id="available-rooms" style="margin-top: 5rem; display: flex; gap: 8rem;"></div>
+
+    <script>
+        $('#availability-form').on('submit', function(event) {
+            event.preventDefault();
+            $.ajax({
+                url: "{% url 'single_room' %}",
+                type: "POST",
+                data: $(this).serialize(),
+                success: function(response) {
+                    if (response.available) {
+                        $('#availability-result').html('<p>Rooms are available!</p><button id="show-rooms" class="btn btn-success">Show Rooms</button>');
+                        $('#show-rooms').on('click', function() {
+                            $('#available-rooms').html('');
+                            response.rooms.forEach(function(room) {
+                                $('#available-rooms').append(
+                                    `<div>
+                                        <h3>${room.room_type}</h3>
+                                        <p>Room Number: ${room.room_number}</p>
+                                        <p>Price: $${room.price}</p>
+                                        <a href="/book/${room.id}/?check_in_date=${response.check_in_date}&check_out_date=${response.check_out_date}" class="btn btn-primary">Book Now</a>
+                                    </div>`
+                                );
+                            });
+                        });
+                    } else {
+                        $('#availability-result').html('<p>Rooms are not available.</p>');
+                        $('#available-rooms').html('');
+                    }
+                },
+                error: function(xhr, errmsg, err) {
+                    $('#availability-result').html('<p>There was an error. Please try again.</p>');
+                }
+            });
+        });
+    </script>
+        
+
         </div>
     </section>
     

@@ -1,0 +1,30 @@
+{% extends "index.html" %}
+{% load static %}
+{% block home %}
+<div style="margin: 8rem;">
+    <h1>Your Tickets</h1>
+    <div id="ticket-list"></div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+        const ticketList = document.getElementById('ticket-list');
+        const bookingDetails = JSON.parse(localStorage.getItem('bookingDetails'));
+
+        if (bookingDetails) {
+            const ticketHTML = `
+                <div>
+                    <h3>Room Type: ${bookingDetails.roomType}</h3>
+                    <p>Room Number: ${bookingDetails.roomNumber}</p>
+                    <p>Paid: $${bookingDetails.price}</p>
+                    <p>Check-in Date: ${bookingDetails.checkInDate}</p>
+                    <p>Check-out Date: ${bookingDetails.checkOutDate}</p>
+                </div>
+            `;
+            ticketList.innerHTML = ticketHTML;
+        } else {
+            ticketList.innerHTML = '<p>No tickets found.</p>';
+        }
+    });
+</script>
+{% endblock %}

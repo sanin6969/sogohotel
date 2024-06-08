@@ -1,0 +1,15 @@
+{% extends "index.html" %}
+{% load static %}
+{% block home %}
+<div style="margin: 8rem;">
+    <h1>Processing Payment...</h1>
+    <p>Please wait while we process your payment.</p>
+</div>
+
+<script>
+
+    setTimeout(function() {
+        window.location.href = "{% url 'payment_success' %}";
+    }, 5000);  // 5 seconds delay
+</script>
+{% endblock home %}

@@ -18,3 +18,15 @@ class ContactForm(forms.Form):
             self.fields[field].widget.attrs['class'] = 'form-control'
         if 'is_active' not in self.fields:
             self.initial['is_active'] = True
+
+
+class RoomAvailabilityForm(forms.Form):
+    room_type = forms.ChoiceField(choices=[
+        ('Single Room', 'Single Room'),
+        ('Family Room', 'Family Room'),
+        ('Presidential Room', 'Presidential Room'),
+    ])
+    no_of_rooms = forms.IntegerField(min_value=1)
+    check_in_date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
+    check_out_date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
+    check_in_time = forms.TimeField(widget=forms.TimeInput(attrs={'type': 'time'}))

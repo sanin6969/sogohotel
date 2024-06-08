@@ -1,0 +1,46 @@
+{% extends "index.html" %}
+{% load static %}
+{% block home %}
+<div style="margin: 8rem;">
+    <h1>Book Room: {{ room.room_type }}</h1>
+    <p>Room Number: {{ room.room_number }}</p>
+    <p>Price: ${{ room.price }}</p>
+    <p>Check-in Date: {{ request.GET.check_in_date }}</p>
+    <p>Check-out Date: {{ request.GET.check_out_date }}</p>
+    <form id="booking-form" action="{% url 'dummy_payment_gateway' %}" method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="room_id" value="{{ room.id }}">
+        <input type="hidden" name="check_in_date" value="{{ request.GET.check_in_date }}">
+        <input type="hidden" name="check_out_date" value="{{ request.GET.check_out_date }}">
+        <button type="submit" class="btn btn-primary mt-4">Proceed to Payment</button>
+    </form>
+</div>
+
+<script>
+   document.addEventListener('DOMContentLoaded', (event) => {
+    const bookingForm = document.getElementById('booking-form');
+    bookingForm.addEventListener('submit', function(event) {
+   
+
+        const checkInDate = '{{ request.GET.check_in_date }}'
+        const checkOutDate = '{{ request.GET.check_out_date }}'
+        const roomId = '{{ room.id }}'
+        const roomType = '{{ room.room_type }}'
+        const roomNumber = '{{ room.room_number }}'
+        const price = '{{ room.price }}'
+
+        const bookingDetails = {
+            roomId: roomId,
+            roomType: roomType,
+            roomNumber: roomNumber,
+            price: price,
+            checkInDate: checkInDate,
+            checkOutDate: checkOutDate,
+        };
+
+        localStorage.setItem('bookingDetails', JSON.stringify(bookingDetails));
+
+    });
+});
+</script>
+{% endblock home %}
