@@ -10,6 +10,8 @@ class Room(models.Model):
     )
     room_type=models.CharField(max_length=50,choices=Type)
     room_number = models.CharField(max_length=10,unique=True)
+    booked_checkin_date = models.DateTimeField(null=True)
+    booked_checkout_date = models.DateTimeField(null=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     Room_image=models.ImageField(upload_to='photos/Rooms',default='default_room_image.jpg')
     is_booked=models.BooleanField(default=False)

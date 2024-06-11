@@ -1,0 +1,20 @@
+{% extends "index.html" %}
+{% load static %}
+{% block home %}
+<section class="site-hero overlay" style="background-image: url('{% static 'images/hero_4.jpg' %}')" data-stellar-background-ratio="0.5">
+    <div class="container">
+        <div class="row site-hero-inner justify-content-center align-items-center">
+            <div class="col-md-10 text-center" data-aos="fade-up">
+                <span class="custom-caption text-uppercase text-white d-block mb-3">Payment Failed</span>
+                <h1 class="heading">Booking Failed</h1>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="py-5 bg-light m-5">
+    <div class="container">
+        <h2 class="text-center">Payment Failed</h2>
+        <p class="text-center">Unfortunately, your payment was not successful. Please try again or contact support.</p>
+    </div>
+</section>
+{% endblock home %}

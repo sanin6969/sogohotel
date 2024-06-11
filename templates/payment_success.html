@@ -1,0 +1,25 @@
+{% extends "index.html" %}
+{% load static %}
+{% block home %}
+<div style="margin: 8rem;">
+    <h1 style="color: rgb(14, 206, 14);">Payment Successful!</h1>
+    <p>Your payment has been processed successfully. Thank you for booking with us. You can see the booking in the tickets option.</p>
+    <p>You will be redirected to the homepage in <span id="countdown">10</span> seconds.</p>
+</div>
+
+<script>
+   
+    let countdownElement = document.getElementById('countdown');
+    let countdown = 10; // 10 seconds countdown
+
+    let countdownInterval = setInterval(function() {
+        countdown -= 1;
+        countdownElement.textContent = countdown;
+
+        if (countdown <= 0) {
+            clearInterval(countdownInterval);
+            window.location.href = "{% url 'home' %}";
+        }
+    }, 1000);  // Update every second
+</script>
+{% endblock home %}
